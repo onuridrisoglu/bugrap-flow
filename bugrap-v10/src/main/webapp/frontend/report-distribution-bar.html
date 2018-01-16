@@ -1,0 +1,72 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+
+<dom-module id="report-distribution-bar">
+    <template>
+    		<style>
+    			.distribution-bar {
+    				display: flex;
+    				align-items: stretch;
+    				margin: 10px;
+    				margin-left: 40px;
+    			}
+    			.bar {
+    				flex-grow: 1;
+				padding: 5px;
+			    padding-left: 12px;
+				min-width: 30px;
+			    font-size: small;
+			    font-weight: bold;
+			}
+			.bar:first-child {
+				border-bottom-left-radius: 10px;
+				border-top-left-radius: 10px;
+			}
+			.bar:last-child {
+				border-bottom-right-radius: 10px;
+				border-top-right-radius: 10px;
+			}
+			.closed {
+				background-color: rgb(80, 80, 80);
+			    color: whitesmoke ;
+			}
+			
+			.assigned {
+				background-color: rgb(120, 120, 120);
+			    color: whitesmoke ;
+			}
+			
+			.unassigned {
+				background-color: rgb(180, 180, 180);
+			}
+    			
+    			
+    		</style>
+		<div class="distribution-bar">
+			<label class="bar closed" style$= "flex-grow: [[closedCount]];">[[closedCount]]</label>
+			<label class="bar assigned" style$= "flex-grow: [[assignedCount]];">[[assignedCount]]</label>
+			<label class="bar unassigned" style$= "flex-grow: [[unassignedCount]];">[[unassignedCount]]</label>
+		</div>
+    </template>
+
+    <script>
+        class ReportDistributionBar extends Polymer.Element {
+            static get is() {
+                return 'report-distribution-bar';
+            }
+            static get properties() {
+		        return {
+		          closedCount: {
+		            type: Number
+		          },
+		          assignedCount: {
+		          	type: Number
+		          },
+		          unassignedCount: {
+		            type: Number
+		          }
+		        };
+		      }
+        }
+        customElements.define(ReportDistributionBar.is, ReportDistributionBar);
+    </script>
+</dom-module>

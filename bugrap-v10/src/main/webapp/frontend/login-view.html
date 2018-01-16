@@ -1,0 +1,68 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="bower_components/vaadin-valo-theme/vaadin-form-layout.html">
+<link rel="import" href="bower_components/vaadin-valo-theme/vaadin-form-item.html">
+<link rel="import" href="bower_components/vaadin-valo-theme/vaadin-text-field.html">
+<link rel="import" href="bower_components/vaadin-valo-theme/vaadin-password-field.html">
+<link rel="import" href="bower_components/vaadin-valo-theme/vaadin-button.html">
+<link rel="import" href="bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="bower_components/vaadin-valo-theme/vaadin-form-layout.html">
+<link rel="import" href="bower_components/vaadin-valo-theme/vaadin-text-field.html">
+<link rel="import" href="bower_components/vaadin-valo-theme/vaadin-password-field.html">
+<link rel="import" href="bower_components/vaadin-valo-theme/vaadin-button.html">
+<link rel="import" href="bower_components/vaadin-valo-theme/vaadin-form-item.html">
+<link rel="import" href="bower_components/vaadin-valo-theme/icons.html">
+
+<dom-module id="login-view"> 
+	<template>
+		<style>
+			.login-container {
+				display: flex;
+				flex-direction: column;
+				height: 600px;
+				justify-content: center;
+/* 				border: 1px; */
+/* 				border-color: var(--valo-secondary-text-color); */
+/* 				border-style: dashed; */
+			}
+			.login-row {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+			}
+			.login-row * {
+				margin : 5px;
+			}
+		</style>
+		<div class="login-container">
+			<div class="login-row">
+				<vaadin-text-field id="text-username" label="Username" name="username"></vaadin-text-field>
+				<vaadin-password-field id="text-password" label="Password" name="password"></vaadin-password-field>						
+			</div>
+			<div class="login-row" style="flex-direction:row-reverse">
+				<vaadin-button id="button-submit" style="align-self:flex-end;" theme="primary">Sign In →</vaadin-button>
+			</div>
+			<template is="dom-if" if="[[error]]">
+				 <div class="error" class="login-row">
+				 	<vaadin-text-field value$="[[errorMessage]]" style="width:100%;" readonly invalid>
+				 		<iron-icon icon="valo:error" slot="prefix"></iron-icon>
+				 	</vaadin-text-field>
+				 </div>
+			</template>
+		</div>  
+	</template> 
+	<script>
+        class LoginView extends Polymer.Element {
+            static get is() {
+                return 'login-view';
+            }
+            static get properties() {
+		        return {
+		          error: {
+		            type: Boolean
+		          }
+		        };
+		      }
+        }
+        customElements.define(LoginView.is, LoginView);
+    </script> 
+</dom-module>

@@ -1,0 +1,86 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="bower_components/vaadin-valo-theme/vaadin-combo-box.html">
+<link rel="import" href="bower_components/vaadin-combo-box/vaadin-combo-box.html">
+<link rel="import" href="bower_components/vaadin-valo-theme/vaadin-button.html">
+<link rel="import" href="bower_components/vaadin-button/vaadin-button.html">
+<link rel="import" href="bower_components/vaadin-icons/vaadin-icons.html">
+<link rel="import" href="bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="bower_components/vaadin-valo-theme/icons.html">
+
+<dom-module id="report-edit">
+    <template>
+		<style> 
+			.report-edit-container { 
+				display: flex; 
+				flex-direction: column; 
+/*  	    			border: 1px;   */
+/*  				border-color: var(--valo-primary-text-color);   */
+/*  	 			border-style: dashed;  */
+			} 
+			.report-edit-row { 
+				display: flex; 
+				justify-content: space-between; 
+/* 				border: 1px;   */
+/*  				border-color: var(--valo-secondary-text-color);   */
+/*  	 			border-style: dashed; */
+			} 
+			.report-edit-row-item {
+				display: flex;
+				align-items: flex-end;
+/* 				border: 1px;   */
+/*  				border-color: yellow;   */
+/*  	 			border-style: dashed; */
+			} 
+			.report-edit-row-item * {
+				margin: 10px;
+			}
+			
+		</style>
+		<div class="report-edit-container">
+			<div class="report-edit-row">
+		  		<vaadin-button theme="tertiary">
+		   			<iron-icon icon="vaadin:wrench" slot="prefix"></iron-icon>
+		   			<span>[[summary]]</span>
+		  		</vaadin-button>
+		 	</div>
+			<div class="report-edit-row">
+				<div class="report-edit-row-item">
+					<vaadin-combo-box id="combo-report-priority" label="PRIORITY" name="combo-report-priority"></vaadin-combo-box>
+					<vaadin-combo-box id="combo-report-type" label="TYPE" name="combo-report-type"></vaadin-combo-box>
+					<vaadin-combo-box id="combo-report-status" label="STATUS" name="combo-report-status"></vaadin-combo-box>
+					<vaadin-combo-box id="combo-report-assigned" label="ASSIGNED TO" name="combo-report-assigned"></vaadin-combo-box>
+					<vaadin-combo-box id="combo-report-version" label="VERSION" name="combo-report-version"></vaadin-combo-box>
+				</div>
+				<div class="report-edit-row-item">
+					<vaadin-button id="button-update" disabled="[[!hasRecord]]">
+					   <span>Update</span>
+					</vaadin-button>
+					<vaadin-button id="button-revert" disabled="[[!hasRecord]]">
+					   <span>Revert</span>
+					</vaadin-button>
+				</div>
+		 	</div>
+		</div>
+	</template>
+    <script>
+        class ReportEdit extends Polymer.Element {
+            static get is() {
+                return 'report-edit';
+            }
+            static get properties() {
+		        return {
+		          loginUser: {
+		            type: String
+		          },
+		          summary: {
+		          	type: String
+		          },
+		          hasRecord: {
+		            type: Boolean
+		          }
+		        };
+		      }
+        }
+        customElements.define(ReportEdit.is, ReportEdit);
+    </script>
+</dom-module>

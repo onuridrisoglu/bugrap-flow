@@ -1,0 +1,150 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="bower_components/vaadin-valo-theme/vaadin-combo-box.html">
+<link rel="import" href="bower_components/vaadin-combo-box/vaadin-combo-box.html">
+<link rel="import" href="bower_components/vaadin-valo-theme/vaadin-button.html">
+<link rel="import" href="bower_components/vaadin-button/vaadin-button.html">
+<link rel="import" href="bower_components/vaadin-ordered-layout/vaadin-vertical-layout.html">
+<link rel="import" href="bower_components/vaadin-ordered-layout/vaadin-horizontal-layout.html">
+<link rel="import" href="bower_components/vaadin-valo-theme/vaadin-text-field.html">
+<link rel="import" href="bower_components/vaadin-text-field/vaadin-text-field.html">
+<link rel="import" href="bower_components/vaadin-form-layout/vaadin-form-layout.html">
+<link rel="import" href="bower_components/vaadin-icons/vaadin-icons.html">
+<link rel="import" href="bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="bower_components/vaadin-valo-theme/icons.html">
+<link rel="import" href="bower_components/vaadin-valo-theme/vaadin-grid.html">
+<link rel="import" href="bower_components/vaadin-grid/vaadin-grid.html">
+<link rel="import" href="bower_components/vaadin-split-layout/vaadin-split-layout.html">
+<link rel="import" href="report-edit.html">
+<link rel="import" href="report-distribution-bar.html">
+
+
+<dom-module id="reports-view">
+    <template>
+	    	<style>
+	    		.reports-container {
+	    			display: flex;
+	    			flex-direction: column;
+	    			align-items: stretch;
+/* 	    			border: 1px;  */
+/* 				border-color: var(--valo-primary-text-color);  */
+/* 	 			border-style: dashed; */
+	    		}
+	    		.reports-row {
+	    			display: flex;
+	    			flex-direction: row;
+	    			justify-content: space-between;
+/* 	    			border: 1px;  */
+/* 				border-color: var(--valo-secondary-text-color);  */
+/* 	 			border-style: dashed; */
+	    		}
+	    		.reports-row {
+	    			
+	    		}
+	    		.row-item {
+/* 	    			border: 1px;  */
+/* 				border-color: red;  */
+/* 	 			border-style: dashed; */
+	 			display: flex;
+	 			align-items: center;
+	    		}
+	    		.reversed {
+	    			flex-direction: row-reverse;
+	    		}
+	    		.enlarged {
+	    			flex: 1;
+	    		}
+	    		.top-bordered {
+	    			border: 1px; 
+				border-color: var(--valo-base-color); 
+	 			border-style: solid;
+	    		}
+	    		#report-dist-bar {
+    				flex: 1;
+	    		}
+	    		.v-label {
+	    			background-color: var(--valo-base-color);
+			    font-family: var(--valo-font-family);
+			    font-size: var(--valo-font-size);
+			    line-height: var(--valo-line-height);
+			    color: var(--valo-body-text-color);
+	    		}
+	    		
+	    	</style>
+	    	<div class="reports-container">
+	    		<div class="reports-row">
+	    			<div class="row-item enlarged">
+		    			<vaadin-combo-box id="combo-project" theme="tertiary" style="width:400px;" required></vaadin-combo-box>
+	    			</div>
+	    			<div>
+	  				<vaadin-button id="button-user" theme="tertiary">
+						<iron-icon icon="vaadin:user"></iron-icon>
+						<span>[[loginUser]]</span>
+					</vaadin-button> 
+					<vaadin-button id="button-logout" theme="tertiary">
+						<iron-icon icon="vaadin:level-up-bold"></iron-icon>
+						<span>Logout</span>
+					</vaadin-button> 			
+	    			</div>
+	    		</div>
+	    		<div class="reports-row">
+	    			<div class="row-item">
+		    			<vaadin-button theme="tertiary">
+						<iron-icon icon="vaadin:bug"></iron-icon>
+						<span>Report a bug</span>
+					</vaadin-button>
+					<vaadin-button theme="tertiary">
+						<iron-icon icon="vaadin:lightbulb"></iron-icon>
+						<span>Request a feature</span>
+					</vaadin-button>
+					<vaadin-button theme="tertiary">
+						<iron-icon icon="vaadin:wrench"></iron-icon>
+						<span>Manage a project</span>
+					</vaadin-button>
+	    			</div>
+	    			<div class="row-item enlarged reversed">
+	    				<vaadin-text-field id="textsearch" placeholder="Search reports..." style="width:400px;" on-input="changeClearIconVisibility" >
+						<iron-icon icon="valo:magnifier" slot="prefix"></iron-icon>
+						<iron-icon icon="valo:cross" id="textsearchicon" slot="suffix" on-click="clearSearchField" hidden></iron-icon>
+					</vaadin-text-field>
+	    			</div>
+	    		</div>
+	    		<div class="reports-row">
+	    			<div class="row-item">
+	    				 <label class="v-label">Reports for&nbsp;</label>
+	  				<vaadin-combo-box id="combo-project-version" theme="tertiary" placeholder="All Versions"></vaadin-combo-box>
+	    			</div>
+	    			<div class="row-item enlarged">
+	    				<report-distribution-bar id="report-dist-bar"></report-distribution-bar>
+	    			</div>
+	    		</div>
+	    		<div class="reports-row">
+	    			<vaadin-split-layout id="split-reports" vertical>
+	    				<vaadin-grid id="grid-reports" slot="grid"></vaadin-grid>
+	    				<report-edit id="report-edit"></report-edit>
+	    			</vaadin-split-layout>
+	    		</div>
+	    	</div>
+	</template>
+	<script>
+		class ReportsView extends Polymer.Element {
+            static get is() {
+                return 'reports-view';
+            }
+            static get properties() {
+		        return {
+		          loginUser: {
+		            type: String
+		          }
+		        };
+		      }
+	      clearSearchField() {
+		    this.$.textsearch.value = '';
+		    this.$.textsearchicon.hidden = true;
+		  }
+		  changeClearIconVisibility(changeEvent) {
+		  	this.$.textsearchicon.hidden = !changeEvent.srcElement.hasValue;
+		  }
+        	}    
+        	customElements.define(ReportsView.is, ReportsView);
+	</script>
+</dom-module>

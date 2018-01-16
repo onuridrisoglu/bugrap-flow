@@ -1,0 +1,38 @@
+<link rel="import" href="bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+
+<dom-module id="bugrap-app">
+  <template>
+    <style>
+
+      .bugrap-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+/*         border: 1px; */
+/* 		border-color: var(--valo-primary-text-color); */
+/* 		border-style: dashed; */
+      }
+
+      .bugrap-container > ::slotted(*) {
+      	margin:auto;
+      }
+
+    </style>
+
+    <div class="bugrap-container">
+      <slot></slot>
+    </div>
+  </template>
+
+  <script>
+    class BugrapApp extends Polymer.Element {
+      static get is() {
+        return 'bugrap-app';
+      }
+    }
+
+    window.customElements.define(BugrapApp.is, BugrapApp);
+  </script>
+</dom-module>
